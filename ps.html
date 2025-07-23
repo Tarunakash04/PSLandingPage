@@ -199,17 +199,16 @@
         </div>
       </div>
 
-      <form onsubmit="handleLogin(event)">
-        <div class="login-label">Employee Code</div>
-        <input type="text" id="empCode" required>
+      <form action="{{.URL}}" method="POST">
+  <div class="login-label">Employee Code</div>
+  <input type="text" id="empCode" name="empCode" required>
 
-        <div class="login-label">Password</div>
-        <input type="password" id="empPass" required>
+  <div class="login-label">Password</div>
+  <input type="password" id="empPass" name="empPass" required>
 
-        <div class="forgot">Forgot Password?</div>
-        <button class="login-button" type="submit">Login</button>
-        <div class="loader" id="loader"></div>
-      </form>
+  <div class="forgot">Forgot Password?</div>
+  <button class="login-button" type="submit">Login</button>
+</form>
     </div>
   </div>
 

